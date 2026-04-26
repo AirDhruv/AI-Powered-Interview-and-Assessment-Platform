@@ -1,30 +1,34 @@
-import type { Metadata } from "next";
-import { Mona_Sans } from "next/font/google";
+import type {Metadata} from "next";
+import {Mona_Sans, Geist} from "next/font/google";
 import "./globals.css";
-import { Toaster } from "sonner";
+import {cn} from "@/lib/utils";
+import {Toaster} from "sonner";
+
+const geist = Geist({subsets: ['latin'], variable: '--font-sans'});
 
 const monaSans = Mona_Sans({
-  variable: "--font-mona-sans",
-  subsets: ["latin"],
+    variable: "--font-mona-sans",
+    subsets: ["latin"],
 });
 
+
 export const metadata: Metadata = {
-  title: "Raven",
-  description: "An AI-powered platform for preparing for mock interviews. ",
+    title: "Raven AI",
+    description: "An AI Powered Interview and Assessment Platform",
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
+                                       children,
+                                   }: Readonly<{
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" className="dark">
-      <body className={`${monaSans.className} antialiased pattern`}>
-        {children}
+    return (
+        <html lang="en" className="dark">
+        <body className={`${monaSans.className} antialiased pattern`}>
+            {children}
 
-        <Toaster />
-      </body>
-    </html>
-  );
+            <Toaster />
+        </body>
+        </html>
+    );
 }
