@@ -21,7 +21,7 @@ const Page =  () => {
         </div>
 
         <Image
-          src="/robot.png"
+          src="/robo.png"
           alt="robo-dude"
           width={400}
           height={400}
