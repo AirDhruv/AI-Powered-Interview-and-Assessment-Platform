@@ -1,6 +1,6 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# =========================
+# Dependencies
+# =========================
 /node_modules
 /.pnp
 .pnp.*
@@ -10,45 +10,70 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
+# =========================
+# Next.js
+# =========================
+.next/
+out/
+build/
 
-# next.js
-/.next/
-/out/
+# =========================
+# Environment variables
+# =========================
+.env*
+!.env.example
 
-# production
-/build
+# =========================
+# Firebase (VERY IMPORTANT)
+# =========================
+*.json
+!package.json
+!tsconfig.json
+!components.json
 
-# misc
-.DS_Store
-*.pem
-
-# debug
+# =========================
+# Logs
+# =========================
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
-# Firebase admin service account key
-raven-*.json
+# =========================
+# Testing
+# =========================
+coverage/
 
-# vercel
+# =========================
+# Vercel
+# =========================
 .vercel
 
-# typescript
+# =========================
+# TypeScript
+# =========================
 *.tsbuildinfo
 next-env.d.ts
 
-# Editors
+# =========================
+# IDEs / Editors
+# =========================
 .vscode/
 .idea/
 
+# =========================
 # Cache
+# =========================
 .swc/
 
-# OS generated files
+# =========================
+# OS files
+# =========================
+.DS_Store
 Thumbs.db
 Desktop.ini
+
+# =========================
+# Misc
+# =========================
+*.pem
