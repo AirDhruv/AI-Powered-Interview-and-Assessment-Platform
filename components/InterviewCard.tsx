@@ -7,15 +7,13 @@ import Link from 'next/link';
 import DisplayTechIcons from './DisplayTechIcons';
 import { getFeedbackByInterviewId } from '@/lib/actions/general.action';
 
-
 const InterviewCard = async ({
     interviewId,
     userId,
     role,
     type,
     techstack,
-    createdAt,
-    coverImage, }: InterviewCardProps) => {
+    createdAt, }: InterviewCardProps) => {
     const feedback = userId && interviewId
         ? await getFeedbackByInterviewId({
             interviewId,
@@ -41,7 +39,7 @@ const InterviewCard = async ({
                     <div className={`absolute top-0 right-0 w-fit px-4 py-2 rounded-bl-lg ${badgeColor}`}>
                         <p className="badge-text">{normalizedType}</p>
                     </div>
-                    <Image src={coverImage || "/covers/facebook.png"} alt="cover-image" width={90} height={90} className="rounded-full object-fit size-[90px]" />
+                    <Image src={getRandomInterviewCover()} alt="cover-image" width={90} height={90} className="rounded-full object-fit size-[90px]" />
 
                     <h3 className="mt-5 capitalize">
                         {role} Interview
