@@ -6,12 +6,13 @@ import { getRandomInterviewCover } from "@/lib/utils";
 
 export async function POST(request: Request) {
     const body = await request.json();
-    console.log("VAPI route hit:", body); // ← add this
-    const { type, role, level, techstack, amount, userid } = await request.json();
+    console.log("VAPI route hit with body:", body); // ← see exactly what VAPI is sending
+    
+    const { type, role, level, techstack, amount, userid } = body;
 
     try {
         const { text: questions } = await generateText({
-            model: google("gemini-2.0-flash-001"), // ← fixed
+            model: google("gemini-2.0-flash-001"),
             prompt: `Prepare questions for a job interview.
         The job role is ${role}.
         The job experience level is ${level}.
@@ -31,11 +32,11 @@ export async function POST(request: Request) {
             role: role,
             type: type,
             level: level,
-            techstack: techstack.split(","),
+            techstack: techstack ? techstack.split(",") : [], // ← safe split
             questions: JSON.parse(questions),
             userId: userid,
             finalized: true,
-            coverImage: getRandomInterviewCover(), // saved once here
+            coverImage: getRandomInterviewCover(),
             createdAt: new Date().toISOString(),
         };
 
