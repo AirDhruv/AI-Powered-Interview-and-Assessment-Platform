@@ -5,11 +5,13 @@ import { db } from "@/firebase/admin";
 import { getRandomInterviewCover } from "@/lib/utils";
 
 export async function POST(request: Request) {
+    const body = await request.json();
+    console.log("VAPI route hit:", body); // ← add this
     const { type, role, level, techstack, amount, userid } = await request.json();
 
     try {
         const { text: questions } = await generateText({
-            model: google("gemini-3-flash-preview"),
+            model: google("gemini-2.0-flash-001"), // ← fixed
             prompt: `Prepare questions for a job interview.
         The job role is ${role}.
         The job experience level is ${level}.
@@ -33,7 +35,7 @@ export async function POST(request: Request) {
             questions: JSON.parse(questions),
             userId: userid,
             finalized: true,
-            coverImage: getRandomInterviewCover(),
+            coverImage: getRandomInterviewCover(), // saved once here
             createdAt: new Date().toISOString(),
         };
 

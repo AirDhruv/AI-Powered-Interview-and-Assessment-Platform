@@ -22,7 +22,7 @@ interface SavedMessage {
 }
 
 
-const Agent = ({ userName, userId, type }: AgentProps) => {
+const Agent = ({ userName, userId, interviewId, feedbackId, type, questions, }: AgentProps) => {
     const router = useRouter();
     const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
     const [messages, setMessages] = useState<SavedMessage[]>([]);
@@ -77,12 +77,36 @@ const Agent = ({ userName, userId, type }: AgentProps) => {
     }, []);
 
     useEffect(() => {
+        if (messages.length > 0) {
+            setLastMessage(messages[messages.length - 1].content);
+        }
+
+        const handleGenerateFeedback = async (messages: SavedMessage[]) => {
+            console.log("handleGenerateFeedback");
+
+            const { success, feedbackId: id } = await createFeedback({
+                interviewId: interviewId!,
+                userId: userId!,
+                transcript: messages,
+                feedbackId,
+            });
+
+            if (success && id) {
+                router.push(`/interview/${interviewId}/feedback`);
+            } else {
+                console.log("Error saving feedback");
+                router.push("/");
+            }
+        };
+
         if (callStatus === CallStatus.FINISHED) {
             if (type === "generate") {
                 router.push("/");
+            } else {
+                handleGenerateFeedback(messages);
             }
         }
-    }, [messages, callStatus, router, type, userId]);
+    }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
 
     const handleCall = async () => {
         setCallStatus(CallStatus.CONNECTING);
@@ -95,15 +119,26 @@ const Agent = ({ userName, userId, type }: AgentProps) => {
                 },
             });
         }
+        else {
+            let formattedQuestions = "";
+            if (questions) {
+                formattedQuestions = questions
+                    .map((question) => `- ${question}`)
+                    .join("\n");
+            }
+
+            await vapi.start(interviewer, {
+                variableValues: {
+                    questions: formattedQuestions,
+                },
+            });
+        }
     };
 
     const handleDisconnect = () => {
         setCallStatus(CallStatus.FINISHED);
         vapi.stop();
     };
-
-    const latestMessage = messages[messages.length - 1]?.content;
-    const isCallInactiveOrFinished = callStatus === CallStatus.INACTIVE || callStatus === CallStatus.FINISHED;
 
     return (
         <>
@@ -141,8 +176,8 @@ const Agent = ({ userName, userId, type }: AgentProps) => {
             {messages.length > 0 && (
                 <div className="transcript-border">
                     <div className="transcript">
-                        <p key={latestMessage} className={cn( "transition-opacity duration-500 opacity-0", "animate-fadeIn opacity-100" )} >
-                            {latestMessage}
+                        <p key={lastMessage} className={cn("transition-opacity duration-500 opacity-0", "animate-fadeIn opacity-100")} >
+                            {lastMessage}
                         </p>
                     </div>
                 </div>
@@ -160,7 +195,7 @@ const Agent = ({ userName, userId, type }: AgentProps) => {
                         />
 
                         <span className="relative">
-                            {isCallInactiveOrFinished ? "Call" : ". . ."}
+                            {callStatus === "INACTIVE" || callStatus === "FINISHED" ? "Call" : ". . ."}
                         </span>
                     </button>
                 ) : (
@@ -170,6 +205,6 @@ const Agent = ({ userName, userId, type }: AgentProps) => {
                 )}
             </div>
         </>
-    )
-}
-export default Agent
+    );
+};
+export default Agent;
