@@ -117,7 +117,7 @@ const Agent = ({ userName, userId, interviewId, feedbackId, type, questions, }: 
                     username: userName,
                 },
                 metadata: {
-                    userId: userId,
+                    userid: userId,
                 },
             });
         }
