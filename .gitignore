@@ -31,6 +31,9 @@ build/
 !tsconfig.json
 !components.json
 
+# Firebase Service Account Keys
+*firebase-adminsdk*.json
+
 # =========================
 # Logs
 # =========================
