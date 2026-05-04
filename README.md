@@ -50,6 +50,9 @@ NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
 NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
+FIREBASE_PROJECT_ID=your_firebase_project_id
+FIREBASE_CLIENT_EMAIL=your_firebase_client_email
+FIREBASE_PRIVATE_KEY=your_firebase_private_key
 ```
 
 ### Running Locally
@@ -71,14 +74,69 @@ The application can be deployed on [Vercel](https://vercel.com) or any other Nod
 
 ## 🗂️ Project Structure
 
-```text
-app/           # Next.js app router pages & layouts
-components/    # Shared React components
-constants/     # Static constants used across the app
-firebase/      # Firebase configuration and utilities
-lib/           # Utility functions and helpers
-public/        # Static assets (images, fonts, etc.)
-types/         # TypeScript declaration files
+```
+AI-Powered-Interview-and-Assessment-Platform/
+├── app/                          # Next.js app router
+│   ├── globals.css               # Global styles
+│   ├── layout.tsx                # Root layout
+│   ├── (auth)/                   # Authentication routes
+│   │   ├── layout.tsx
+│   │   ├── sign-in/
+│   │   │   └── page.tsx
+│   │   └── sign-up/
+│   │       └── page.tsx
+│   ├── (root)/                   # Main application routes
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── interview/
+│   │       ├── page.tsx
+│   │       └── [id]/
+│   │           ├── page.tsx
+│   │           └── feedback/
+│   │               └── page.tsx
+│   └── api/                      # API routes
+│       └── vapi/
+│           └── generate/
+│               └── route.ts
+├── components/                   # React components
+│   ├── Agent.tsx
+│   ├── AuthForm.tsx
+│   ├── DisplayTechIcons.tsx
+│   ├── FormField.tsx
+│   ├── InterviewCard.tsx
+│   └── ui/                       # UI components
+│       ├── button.tsx
+│       ├── form.tsx
+│       ├── input.tsx
+│       ├── label.tsx
+│       └── sonner.tsx
+├── constants/                    # Constants
+│   └── index.ts
+├── firebase/                     # Firebase config
+│   ├── admin.ts
+│   └── client.ts
+├── lib/                          # Utilities
+│   ├── utils.ts
+│   ├── vapi.sdk.ts
+│   └── actions/                  # Server actions
+│       ├── auth.action.ts
+│       └── general.action.ts
+├── public/                       # Static assets
+│   └── covers/
+├── types/                        # TypeScript types
+│   ├── index.d.ts
+│   └── vapi.d.ts
+├── components.json               # Component config
+├── CONTRIBUTING.md               # Contribution guidelines
+├── eslint.config.mjs             # ESLint config
+├── LICENSE                       # MIT License
+├── next-env.d.ts                 # Next.js types
+├── next.config.ts                # Next.js config
+├── package.json                  # Dependencies
+├── postcss.config.mjs            # PostCSS config
+├── README.md                     # This file
+├── tsconfig.json                 # TypeScript config
+└── .gitignore                    # Git ignore rules
 ```
 
 ## 🤝 Contributing
