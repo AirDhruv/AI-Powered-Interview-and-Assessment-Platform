@@ -115,7 +115,9 @@ const Agent = ({ userName, userId, interviewId, feedbackId, type, questions, }: 
             await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
                 variableValues: {
                     username: userName,
-                    userid: userId,
+                },
+                metadata: {
+                    userId: userId,
                 },
             });
         }

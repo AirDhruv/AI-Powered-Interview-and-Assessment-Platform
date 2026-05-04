@@ -9,7 +9,8 @@ export async function POST(request: Request) {
     console.log("VAPI route hit with body:", body); // ← see exactly what VAPI is sending
     
     const { type, role, level, techstack, amount, userid } = body;
-
+    console.log("USER ID RECEIVED:", userid);
+    
     try {
         const { text: questions } = await generateText({
             model: google("gemini-2.0-flash-001"),
